@@ -6,13 +6,20 @@ function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
 
   const onAddTodo = (text: string) => { 
-    setTodos((prevTodos) => [...prevTodos, {id: 'id', text: text}])
+    setTodos((prevTodos) => [...prevTodos, {id: new Date().toISOString(), text: text}])
+  }
+
+  const deleteHandler = (id: string) => {
+    console.log('id', id);
+    setTodos((prevTodos) => {
+      return prevTodos.filter(todo => todo.id !== id)
+    })
   }
 
   return (
     <div>
       <NewTodo onAddTodo={onAddTodo}/>
-      <Todos todos={todos}/>
+      <Todos onRemoveTodo={deleteHandler} items={todos}/>
     </div>
   );
 }
